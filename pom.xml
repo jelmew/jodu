@@ -6,16 +6,16 @@
   <artifactId>jodu</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <properties>
-    <compiler-plugin.version>3.11.0</compiler-plugin.version>
-    <kotlin.version>1.9.22</kotlin.version>
+    <compiler-plugin.version>3.12.1</compiler-plugin.version>
+    <kotlin.version>2.1.21</kotlin.version>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.6.7</quarkus.platform.version>
+    <quarkus.platform.version>3.23.0</quarkus.platform.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.1.2</surefire-plugin.version>
+    <surefire-plugin.version>3.2.3</surefire-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -170,7 +170,8 @@
       </activation>
       <properties>
         <skipITs>false</skipITs>
-        <quarkus.package.type>native</quarkus.package.type>
+        <quarkus.native.enabled>true</quarkus.native.enabled>
+        <quarkus.package.jar.enabled>false</quarkus.package.jar.enabled>
       </properties>
     </profile>
   </profiles>

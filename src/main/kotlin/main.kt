@@ -12,9 +12,3 @@ class OduCommand(private val oduService: OduService) : Runnable {
     }
 }
 
-@Dependent
-class GreetingService {
-    fun sayHello(name: String?) {
-        println("Hello $name!")
-    }
-}

@@ -10,20 +10,24 @@ class OduService {
     data class FileDetail(val path: Path, val size: Long)
 
     fun listDirectoryContents(dir: Path = Path("")) {
-        dir.listDirectoryEntries().map { path ->
-            analyzeFileSize(path)
-        }.sortedBy { fileDetail -> fileDetail.size }.forEach { fileDetail ->
-            println("${String.format("%-20s", FileUtils.byteCountToDisplaySize(fileDetail.size))} ${fileDetail.path}")
+        dir.listDirectoryEntries().map {
+            analyzeFileSize(it)
+        }.sortedBy { it.size }.forEach {
+            println("${String.format("%-20s", FileUtils.byteCountToDisplaySize(it.size))} ${it.path}")
         }
     }
 
     private fun analyzeFileSize(path: Path): FileDetail {
-        return if (path.isSymbolicLink()) {
+        return try {
+            if (path.isSymbolicLink()) {
+                FileDetail(path.fileName, 0)
+            } else if (path.isDirectory()) {
+                FileDetail(path.fileName, path.listDirectoryEntries().sumOf { file -> analyzeFileSize(file).size })
+            } else {
+                FileDetail(path.fileName, path.fileSize())
+            }
+        } catch (e: java.nio.file.AccessDeniedException) {
             FileDetail(path.fileName, 0)
-        } else if (path.isDirectory()) {
-            FileDetail(path.fileName, path.listDirectoryEntries().sumOf { file -> analyzeFileSize(file).size })
-        } else {
-            FileDetail(path.fileName, path.fileSize())
         }
     }
 }
