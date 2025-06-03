@@ -1,5 +1,6 @@
 package nl.jelmervanamen
 
+import io.quarkus.logging.Log
 import jakarta.enterprise.context.Dependent
 import org.apache.commons.io.FileUtils
 import java.nio.file.Path
@@ -27,6 +28,7 @@ class OduService {
                 FileDetail(path.fileName, path.fileSize())
             }
         } catch (e: java.nio.file.AccessDeniedException) {
+            Log.warn("While trying to  list a directory or get afileSize, an exception was thrown: ", e)
             FileDetail(path.fileName, 0)
         }
     }
